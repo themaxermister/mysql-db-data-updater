@@ -1,4 +1,3 @@
-import csv
 import yaml
 import pandas as pd
 import mysql.connector
@@ -34,9 +33,9 @@ def replaceQuestionsConfig(cnx):
     try:
         data = exportQnsTableValues(cnx, ['id', 'question_configuration'], 'STROOP')
         df = pd.DataFrame(data, columns=['id', 'question_configuration'])
-        df.to_csv('old_stroop.csv', index=False)
+        #df.to_csv('data/old_stroop.csv', index=False)
         df['question_configuration'] = df['question_configuration'].apply(removeInlineCSS)
-        df.to_csv('new_stroop.csv', index=False)
+        df.to_csv('data/new_stroop.csv', index=False)
         print("Questions data edited and exported to CSV successfully!")
     except Exception as e:
         print(e)

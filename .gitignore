@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # CUSTOM
-*.csv
-*.json
+**/*.csv
+**/*.json
