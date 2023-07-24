@@ -9,9 +9,13 @@ color_code_dict = {
     "#FFFFFF": "white",
 }
 
-def exportQnsTableValues(cnx, columns, qns_type = None):
+def exportQnsTableValues(cnx, columns, qns_tag):
     cursor = cnx.cursor()
-    query = "SELECT " + ",".join(columns) + " FROM QUESTIONS" + f" WHERE question_type = '{qns_type}'" if qns_type else ""
+    query = f"""
+    SELECT {", ".join(columns)}
+    FROM QUESTIONS qns
+    INNER JOIN (SELECT question_id, tag_id FROM QUESTION_TAGS qt INNER JOIN TAGS t ON qt.tag_id = t.id WHERE t.name = '{qns_tag}') tags ON tags.question_id = qns.id
+    """
     cursor.execute(query)
     data = cursor.fetchall()
     cursor.close()
